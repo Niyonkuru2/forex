@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const Sidebar = () => {
+  const { logoutUser } = useAuth();
   return (
     <aside className="w-64 bg-gray-900 text-white flex flex-col p-6">
       <h1 className="text-2xl font-bold mb-8">TradeApp</h1>
@@ -29,12 +31,14 @@ const Sidebar = () => {
         </div>
 
         {/* Logout at the bottom */}
-        <Link
-          to="/logout"
-          className="hover:bg-gray-700 p-2 rounded mt-auto"
-        >
-          Logout
-        </Link>
+        <button
+            onClick={() => {
+              logoutUser();
+            }}
+            className="hover:bg-gray-700 p-2 rounded mt-auto text-left cursor-pointer"
+          >
+            Logout
+          </button>
       </nav>
     </aside>
   );

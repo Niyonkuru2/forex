@@ -129,7 +129,7 @@ const EditTradeModal = ({ trade, closeModal, refetchTrades }) => {
           name="comment"
           value={formData.comment}
           onChange={handleChange}
-          placeholder="Comment (optional)"
+          placeholder="Profit/Loss"
           className="border p-2 rounded w-full mb-2"
         />
 

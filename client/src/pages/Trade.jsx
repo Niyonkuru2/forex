@@ -105,14 +105,6 @@ const AddTrade = () => {
           />
         </div>
 
-        <textarea
-          name="comment"
-          placeholder="Comment (optional)"
-          value={formData.comment}
-          onChange={handleChange}
-          className="w-full p-3 border rounded mt-4"
-        />
-
         <button
           type="submit"
           disabled={isAddingTrade}
