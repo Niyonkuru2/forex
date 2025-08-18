@@ -79,6 +79,7 @@ export const editTrade = async (req, res) => {
 };
 
 // Get daily statistics for dashboard
+// Get daily statistics for dashboard
 export const getDailyStats = async (req, res) => {
     try {
         const trades = await Trade.find({ user: req.user._id });
@@ -90,14 +91,18 @@ export const getDailyStats = async (req, res) => {
         let totalProfitLoss = 0;
 
         trades.forEach(trade => {
-            if (trade.status === "success") successfulTrades++;
-            if (trade.status === "fail") failedTrades++;
-            // calculate profit/loss
-            if (trade.status !== "pending" && trade.entryPrice && trade.takeProfit) {
-                const pl = trade.type === "buy"
-                    ? (trade.takeProfit - trade.entryPrice) * trade.volume
-                    : (trade.entryPrice - trade.takeProfit) * trade.volume;
-                totalProfitLoss += pl;
+            if (trade.status === "success") {
+                successfulTrades++;
+            } else if (trade.status === "fail") {
+                failedTrades++;
+            }
+
+            // Use profit/loss stored in comment field
+            if (trade.status !== "pending" && trade.comment) {
+                const pl = parseFloat(trade.comment);
+                if (!isNaN(pl)) {
+                    totalProfitLoss += pl;
+                }
             }
         });
 

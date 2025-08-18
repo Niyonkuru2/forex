@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import { TrendingUp, TrendingDown, BarChart2, Target } from "lucide-react";
+import {
+  TrendingUp,
+  TrendingDown,
+  BarChart2,
+  Target,
+} from "lucide-react";
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
@@ -11,6 +16,8 @@ const Dashboard = () => {
     successRate: "0%",
     totalProfitLoss: 0,
     avgProfitLoss: 0,
+    totalProfit: 0,
+    totalLoss: 0,
   });
 
   useEffect(() => {
@@ -29,11 +36,17 @@ const Dashboard = () => {
         const data = await res.json();
         if (data.success) {
           setStats({
-            ...data,
+            totalTrades: data.totalTrades || 0,
+            successfulTrades: data.successfulTrades || 0,
+            failedTrades: data.failedTrades || 0,
+            successRate: data.successRate || "0%",
+            totalProfitLoss: data.totalProfitLoss || 0,
             avgProfitLoss:
               data.totalTrades > 0
-                ? data.totalProfitLoss / data.totalTrades
+                ? (data.totalProfitLoss || 0) / data.totalTrades
                 : 0,
+            totalProfit: data.totalProfit || 0,
+            totalLoss: data.totalLoss || 0,
           });
         } else {
           toast.error(data.message);
@@ -45,6 +58,9 @@ const Dashboard = () => {
 
     fetchStats();
   }, []);
+
+  const formatNumber = (num) =>
+    typeof num === "number" ? num.toFixed(2) : "0.00";
 
   const statCards = [
     {
@@ -72,8 +88,20 @@ const Dashboard = () => {
       bg: "bg-yellow-50",
     },
     {
-      title: "Total Profit/Loss",
-      value: stats.totalProfitLoss.toFixed(2),
+      title: "Total Profit",
+      value: formatNumber(stats.totalProfit),
+      icon: <TrendingUp className="w-8 h-8 text-green-600" />,
+      bg: "bg-green-50",
+    },
+    {
+      title: "Total Loss",
+      value: formatNumber(stats.totalLoss),
+      icon: <TrendingDown className="w-8 h-8 text-red-600" />,
+      bg: "bg-red-50",
+    },
+    {
+      title: "Net Profit/Loss",
+      value: formatNumber(stats.totalProfitLoss),
       icon:
         stats.totalProfitLoss >= 0 ? (
           <TrendingUp className="w-8 h-8 text-green-600" />
@@ -81,13 +109,11 @@ const Dashboard = () => {
           <TrendingDown className="w-8 h-8 text-red-600" />
         ),
       bg:
-        stats.totalProfitLoss >= 0
-          ? "bg-green-50"
-          : "bg-red-50",
+        stats.totalProfitLoss >= 0 ? "bg-green-50" : "bg-red-50",
     },
     {
       title: "Average Profit/Loss per Trade",
-      value: stats.avgProfitLoss.toFixed(2),
+      value: formatNumber(stats.avgProfitLoss),
       icon:
         stats.avgProfitLoss >= 0 ? (
           <TrendingUp className="w-8 h-8 text-green-600" />
@@ -95,9 +121,7 @@ const Dashboard = () => {
           <TrendingDown className="w-8 h-8 text-red-600" />
         ),
       bg:
-        stats.avgProfitLoss >= 0
-          ? "bg-green-50"
-          : "bg-red-50",
+        stats.avgProfitLoss >= 0 ? "bg-green-50" : "bg-red-50",
     },
   ];
 
