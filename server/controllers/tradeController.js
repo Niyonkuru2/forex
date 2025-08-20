@@ -10,7 +10,7 @@ export const addTrade = async (req, res) => {
         }
 
         const newTrade = await Trade.create({
-            user: req.user._id, // assume you have auth middleware that sets req.user
+            user: req.user._id,
             pair,
             type,
             volume,
@@ -21,7 +21,7 @@ export const addTrade = async (req, res) => {
             status
         });
 
-        res.json({ success: true, trade: newTrade, message: "Trade added successfully" });
+        res.json({ success: true, trade: newTrade});
     } catch (error) {
         console.log(error.message);
         res.json({ success: false, message: error.message });
@@ -58,13 +58,13 @@ export const getTrades = async (req, res) => {
 // Edit a trade
 export const editTrade = async (req, res) => {
     const tradeId = req.params.id;
-    const updates = req.body; // can update any field
+    const updates = req.body;
 
     try {
         const updatedTrade = await Trade.findOneAndUpdate(
             { _id: tradeId, user: req.user._id },
             updates,
-            { new: true } // return updated doc
+            { new: true }
         );
 
         if (!updatedTrade) {
@@ -78,44 +78,47 @@ export const editTrade = async (req, res) => {
     }
 };
 
-// Get daily statistics for dashboard
-// Get daily statistics for dashboard
+// Get statistics for dashboard
 export const getDailyStats = async (req, res) => {
-    try {
-        const trades = await Trade.find({ user: req.user._id });
+  try {
+    const trades = await Trade.find({ user: req.user._id });
 
-        // Initialize stats
-        let totalTrades = trades.length;
-        let successfulTrades = 0;
-        let failedTrades = 0;
-        let totalProfitLoss = 0;
+    let totalTrades = trades.length;
+    let successfulTrades = 0;
+    let failedTrades = 0;
+    let totalProfit = 0;
+    let totalLoss = 0;
 
-        trades.forEach(trade => {
-            if (trade.status === "success") {
-                successfulTrades++;
-            } else if (trade.status === "fail") {
-                failedTrades++;
-            }
+    trades.forEach(trade => {
+      // Parse comment as float
+      const value = parseFloat(trade.comment);
+      if (isNaN(value)) return;
 
-            // Use profit/loss stored in comment field
-            if (trade.status !== "pending" && trade.comment) {
-                const pl = parseFloat(trade.comment);
-                if (!isNaN(pl)) {
-                    totalProfitLoss += pl;
-                }
-            }
-        });
+      if (trade.status === "success") {
+        successfulTrades++;
+        totalProfit += value; // sum comment for success
+      } else if (trade.status === "fail") {
+        failedTrades++;
+        totalLoss += value; // sum comment for fail
+      }
+    });
 
-        res.json({
-            success: true,
-            totalTrades,
-            successfulTrades,
-            failedTrades,
-            successRate: totalTrades ? ((successfulTrades / totalTrades) * 100).toFixed(2) + "%" : "0%",
-            totalProfitLoss
-        });
-    } catch (error) {
-        console.log(error.message);
-        res.json({ success: false, message: error.message });
-    }
+    const totalProfitLoss = totalProfit - totalLoss;
+
+    res.json({
+      success: true,
+      totalTrades,
+      successfulTrades,
+      failedTrades,
+      successRate: totalTrades
+        ? ((successfulTrades / totalTrades) * 100).toFixed(2) + "%"
+        : "0%",
+      totalProfitLoss,
+      totalProfit,
+      totalLoss
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ success: false, message: error.message });
+  }
 };

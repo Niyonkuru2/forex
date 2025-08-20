@@ -51,8 +51,8 @@ const Dashboard = () => {
         } else {
           toast.error(data.message);
         }
-      } catch (error) {
-        toast.error("Failed to fetch dashboard statistics");
+      } catch (err) {
+        console.log(err);
       }
     };
 

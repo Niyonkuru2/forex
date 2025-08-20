@@ -47,7 +47,7 @@ const EditTradeModal = ({ trade, closeModal, refetchTrades }) => {
         toast.error(data.message);
       }
     } catch (err) {
-      toast.error("Failed to update trade");
+      console.log(err);
     }
   };
 

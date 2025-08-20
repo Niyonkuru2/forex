@@ -9,7 +9,7 @@ const DashboardLayout = () => {
 
       {/* Main content */}
       <div className="flex-1 overflow-auto p-6">
-        <Outlet /> {/* Renders Dashboard or AddTrade */}
+        <Outlet /> {/* Render Dashboard or AddTrade */}
       </div>
     </div>
   );
