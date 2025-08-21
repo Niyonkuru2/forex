@@ -6,7 +6,7 @@ const DayTrading = () => {
     <div className="p-8 max-w-6xl mx-auto space-y-10">
       {/* Header */}
       <div className="text-center space-y-2">
-        <h1 className="text-4xl font-bold text-green-700">Day Trading Strategy</h1>
+        <h1 className="text-4xl font-bold text-blue-700">Day Trading Strategy</h1>
         <p className="text-gray-600">
           A complete structured guide for traders who want to capture intraday moves 
           with patience, analysis, and strong risk management.
@@ -14,8 +14,8 @@ const DayTrading = () => {
       </div>
 
       {/* Belief */}
-      <section className="bg-white shadow rounded-2xl p-6 border-l-4 border-green-500">
-        <h2 className="text-2xl font-bold text-green-600 mb-2">Belief</h2>
+      <section className="bg-white shadow rounded-2xl p-6 border-l-4 border-blue-500">
+        <h2 className="text-2xl font-bold text-blue-600 mb-2">Belief</h2>
         <p className="text-gray-700 leading-relaxed">
           Day trading focuses on capturing larger moves within a single trading day. 
           Trades can last minutes to hours, but positions are always closed before the day ends. 

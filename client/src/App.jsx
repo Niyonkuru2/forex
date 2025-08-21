@@ -9,6 +9,7 @@ import { Toaster } from "react-hot-toast";
 import Reports from "./pages/Reports";
 import Scalping from "./pages/Scalping";
 import DayTrading from "./pages/DayTrading";
+import OrdersAndLotSize from "./pages/Orders";
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="report" element={<Reports />} />
           <Route path="scalping" element={<Scalping />} />
           <Route path="day-trade" element={<DayTrading />} />
+          <Route path="orders" element={<OrdersAndLotSize />} />
         </Route>
       </Routes>
     </>

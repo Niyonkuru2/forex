@@ -40,6 +40,12 @@ const Sidebar = () => {
           >
             Day Trader
           </Link>
+          <Link
+            to="/orders"
+            className="hover:bg-gray-700 p-2 rounded"
+          >
+            Order
+          </Link>
         </div>
 
         {/* Logout at the bottom */}
