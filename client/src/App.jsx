@@ -7,6 +7,8 @@ import DashboardLayout from "./components/DashbordLayout";
 import PrivateRoute from "./components/PrivateRoute";
 import { Toaster } from "react-hot-toast";
 import Reports from "./pages/Reports";
+import Scalping from "./pages/Scalping";
+import DayTrading from "./pages/DayTrading";
 
 const App = () => {
   return (
@@ -29,6 +31,8 @@ const App = () => {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="add" element={<AddTrade />} />
           <Route path="report" element={<Reports />} />
+          <Route path="scalping" element={<Scalping />} />
+          <Route path="day-trade" element={<DayTrading />} />
         </Route>
       </Routes>
     </>

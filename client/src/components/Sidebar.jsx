@@ -28,6 +28,18 @@ const Sidebar = () => {
           >
             Report
           </Link>
+          <Link
+            to="/scalping"
+            className="hover:bg-gray-700 p-2 rounded"
+          >
+            Scalper Trader
+          </Link>
+          <Link
+            to="/day-trade"
+            className="hover:bg-gray-700 p-2 rounded"
+          >
+            Day Trader
+          </Link>
         </div>
 
         {/* Logout at the bottom */}
