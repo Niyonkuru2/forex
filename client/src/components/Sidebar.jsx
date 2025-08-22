@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { Menu, X } from "lucide-react"; // icons
+import { Menu} from "lucide-react"; // icons
 
 const Sidebar = () => {
   const { logoutUser } = useAuth();
