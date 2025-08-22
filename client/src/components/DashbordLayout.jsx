@@ -8,8 +8,8 @@ const DashboardLayout = () => {
       <Sidebar />
 
       {/* Main content */}
-      <div className="flex-1 overflow-auto p-6">
-        <Outlet /> {/* Render Dashboard or AddTrade */}
+      <div className="flex-1 overflow-auto p-6 md:ml-64">
+        <Outlet /> {/* Render Dashboard All Pages */}
       </div>
     </div>
   );

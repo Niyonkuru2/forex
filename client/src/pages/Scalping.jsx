@@ -1,16 +1,35 @@
-import React from "react";
-import { Brain, Clock, TrendingUp, LineChart, AlertTriangle, BookOpen } from "lucide-react";
+import { Brain, Clock, TrendingUp, LineChart, AlertTriangle, BookOpen, CheckCircle } from "lucide-react";
 
 const Scalping = () => {
   return (
-    <div className="p-8 max-w-6xl mx-auto space-y-10">
+    <div className="p-4 md:p-8 max-w-6xl mx-auto space-y-10">
       {/* Header */}
       <div className="text-center space-y-2">
-        <h1 className="text-4xl font-bold text-blue-700">Scalping Strategy</h1>
-        <p className="text-gray-600">
+        <h1 className="text-3xl md:text-4xl font-bold text-blue-700">Scalping Strategy</h1>
+        <p className="text-gray-600 text-sm md:text-base">
           A structured guide to fast-paced trading with discipline, precision, and consistency.
         </p>
       </div>
+
+      {/* 🔹 Quick Overview (Summary Cards) */}
+      <section className="grid sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        <div className="bg-white shadow rounded-xl p-4 text-center border-t-4 border-blue-500">
+          <p className="text-xs md:text-sm text-gray-500">Best Session</p>
+          <h3 className="text-lg font-bold text-blue-600">London Open</h3>
+        </div>
+        <div className="bg-white shadow rounded-xl p-4 text-center border-t-4 border-green-500">
+          <p className="text-xs md:text-sm text-gray-500">Pairs</p>
+          <h3 className="text-lg font-bold text-green-600">EUR/USD, GBP/USD</h3>
+        </div>
+        <div className="bg-white shadow rounded-xl p-4 text-center border-t-4 border-yellow-500">
+          <p className="text-xs md:text-sm text-gray-500">Risk/Trade</p>
+          <h3 className="text-lg font-bold text-yellow-600">0.5 – 1%</h3>
+        </div>
+        <div className="bg-white shadow rounded-xl p-4 text-center border-t-4 border-red-500">
+          <p className="text-xs md:text-sm text-gray-500">Target/Day</p>
+          <h3 className="text-lg font-bold text-red-600">10 – 20 pips</h3>
+        </div>
+      </section>
 
       {/* Belief */}
       <section className="bg-white shadow rounded-2xl p-6 border-l-4 border-blue-500">
@@ -70,7 +89,7 @@ const Scalping = () => {
       {/* Daily Schedule */}
       <section>
         <h2 className="text-2xl font-bold text-indigo-600 mb-4">Daily Schedule</h2>
-        <table className="w-full border border-gray-200 rounded-lg overflow-hidden">
+        <table className="w-full border border-gray-200 rounded-lg overflow-hidden text-sm md:text-base">
           <thead>
             <tr className="bg-gray-100 text-gray-800">
               <th className="p-3 border">Time (GMT)</th>
@@ -133,6 +152,20 @@ const Scalping = () => {
           <li><b>Journaling:</b> Record setups, mistakes, and lessons. Review weekly.</li>
           <li><b>Discipline:</b> Have a daily stop (loss & profit) limit to avoid burnout.</li>
           <li> <b>Adaptation:</b> Not every market is good for scalping — step aside when volatility is low.</li>
+        </ul>
+      </section>
+
+      {/* ✅ Scalper's Checklist */}
+      <section className="bg-white shadow-md rounded-2xl p-6">
+        <h2 className="text-2xl font-bold text-green-600 mb-4 flex items-center gap-2">
+          <CheckCircle size={22} /> Scalper’s Checklist
+        </h2>
+        <ul className="space-y-2 text-gray-700">
+          <li>✅ Trend confirmed (H1 bias matches entry)</li>
+          <li>✅ Spread less than 2 pips</li>
+          <li>✅ No high-impact news in next 30 min</li>
+          <li>✅ Risk ≤ 1% of account</li>
+          <li>✅ Stop loss placed before entry</li>
         </ul>
       </section>
     </div>

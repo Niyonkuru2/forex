@@ -8,6 +8,15 @@ import {
   Target,
 } from "lucide-react";
 
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
+} from "recharts";
+
 const Dashboard = () => {
   const [stats, setStats] = useState({
     totalTrades: 0,
@@ -108,8 +117,7 @@ const Dashboard = () => {
         ) : (
           <TrendingDown className="w-8 h-8 text-red-600" />
         ),
-      bg:
-        stats.totalProfitLoss >= 0 ? "bg-green-50" : "bg-red-50",
+      bg: stats.totalProfitLoss >= 0 ? "bg-green-50" : "bg-red-50",
     },
     {
       title: "Average Profit/Loss per Trade",
@@ -120,10 +128,17 @@ const Dashboard = () => {
         ) : (
           <TrendingDown className="w-8 h-8 text-red-600" />
         ),
-      bg:
-        stats.avgProfitLoss >= 0 ? "bg-green-50" : "bg-red-50",
+      bg: stats.avgProfitLoss >= 0 ? "bg-green-50" : "bg-red-50",
     },
   ];
+
+  // ✅ Data for Profit vs Loss comparison
+  const profitLossData = [
+    { name: "Profit", value: stats.totalProfit },
+    { name: "Loss", value: stats.totalLoss },
+  ];
+
+  const COLORS = ["#10B981", "#EF4444"]; // green = profit, red = loss
 
   return (
     <div>
@@ -146,12 +161,28 @@ const Dashboard = () => {
           ))}
         </div>
 
-        {/* Placeholder for charts or trade distribution */}
+        {/* Performance Overview - Profit vs Loss */}
         <div className="bg-white rounded-xl shadow-sm p-6 mb-6">
           <h3 className="text-xl font-bold mb-4">Performance Overview</h3>
-          <p className="text-gray-500">
-            📈 Charts for profit/loss trends, win rate, and strategy distribution can go here.
-          </p>
+
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={profitLossData}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                outerRadius={120}
+                dataKey="value"
+              >
+                {profitLossData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index]} />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
         </div>
 
         <Outlet />
