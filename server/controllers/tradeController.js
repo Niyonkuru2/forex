@@ -81,41 +81,50 @@ export const editTrade = async (req, res) => {
 // Get statistics for dashboard
 export const getDailyStats = async (req, res) => {
   try {
+    // Fetch all trades for the logged-in user
     const trades = await Trade.find({ user: req.user._id });
 
+    // Initialize counters
     let totalTrades = trades.length;
     let successfulTrades = 0;
     let failedTrades = 0;
     let totalProfit = 0;
     let totalLoss = 0;
 
+    // Loop through trades and sum profit/loss
     trades.forEach(trade => {
-      // Parse comment as float
+      // Parse trade.comment as float (assumed to contain profit/loss value)
       const value = parseFloat(trade.comment);
-      if (isNaN(value)) return;
+      if (isNaN(value)) return; // Skip if not a number
 
       if (trade.status === "success") {
         successfulTrades++;
-        totalProfit += value; // sum comment for success
+        totalProfit += value; // Sum profit
       } else if (trade.status === "fail") {
         failedTrades++;
-        totalLoss += value; // sum comment for fail
+        totalLoss += value; // Sum loss
       }
     });
 
+    // Net profit/loss
     const totalProfitLoss = totalProfit - totalLoss;
 
+    // Money-based success rate
+    const successRate =
+      totalProfit + totalLoss > 0
+        ? ((totalProfit / (totalProfit + totalLoss)) * 100).toFixed(2) + "%"
+        : "0%";
+
+    // Send response
     res.json({
       success: true,
       totalTrades,
       successfulTrades,
       failedTrades,
-      successRate: totalTrades
-        ? ((successfulTrades / totalTrades) * 100).toFixed(2) + "%"
-        : "0%",
-      totalProfitLoss,
       totalProfit,
-      totalLoss
+      totalLoss,
+      totalProfitLoss,
+      successRate // Based on money, not trade count
     });
   } catch (error) {
     console.log(error.message);
